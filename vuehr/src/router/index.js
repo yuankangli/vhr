@@ -31,10 +31,13 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/',
+      path: '/login',
       name: 'Login',
       component: Login,
       hidden: true
+    },{
+      path: '/',
+      redirect: '/home',
     }, {
       path: '/home',
       name: '主页',

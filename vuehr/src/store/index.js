@@ -30,6 +30,13 @@ export default new Vuex.Store({
     },
     logout(state){
       window.localStorage.removeItem('user');
+      let state1 = state;
+      state.user = {
+        name: '未登录',
+        userface: '',
+        username: '',
+        roles: '',
+      };
       state.routes = [];
     },
     toggleNFDot(state, newValue){

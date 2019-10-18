@@ -15,8 +15,8 @@ import {isNotNullORBlank} from './utils/utils'
 import './utils/filter_utils'
 import 'font-awesome/css/font-awesome.min.css'
 
-Vue.config.productionTip = false
-Vue.use(ElementUI)
+Vue.config.productionTip = false;
+Vue.use(ElementUI);
 
 Vue.prototype.getRequest = getRequest;
 Vue.prototype.postRequest = postRequest;
@@ -24,26 +24,32 @@ Vue.prototype.deleteRequest = deleteRequest;
 Vue.prototype.putRequest = putRequest;
 Vue.prototype.isNotNullORBlank = isNotNullORBlank;
 
-router.beforeEach((to, from, next)=> {
-    if (to.name == 'Login') {
-      next();
+router.beforeEach((to, from, next) => {
+    // debugger;
+
+    var name = store.state.user.name;
+    if (to.path.toLocaleLowerCase() === '/login') {
+      if (name === '未登录') {
+        next();
+      } else {
+        next({path: '/home'});
+      }
       return;
     }
-    var name = store.state.user.name;
-    if (name == '未登录') {
+    if (name === '未登录') {
       if (to.meta.requireAuth || to.name == null) {
-        next({path: '/', query: {redirect: to.path}})
+        next({path: '/login', query: {redirect: to.path}})
       } else {
         next();
       }
     } else {
       initMenu(router, store);
-      if(to.path=='/chat')
+      if (to.path === '/chat')
         store.commit("updateMsgList", []);
       next();
     }
   }
-)
+);
 
 new Vue({
   el: '#app',
@@ -51,4 +57,4 @@ new Vue({
   store,
   template: '<App/>',
   components: {App}
-})
+});

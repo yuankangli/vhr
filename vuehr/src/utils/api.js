@@ -5,9 +5,9 @@ axios.interceptors.request.use(config => {
 }, err => {
   Message.error({message: '请求超时!'});
   // return Promise.resolve(err);
-})
+});
 axios.interceptors.response.use(data => {
-  if (data.status && data.status == 200 && data.data.status == 500) {
+  if (data.status && data.status === 200 && data.data.status === 500) {
     Message.error({message: data.data.msg});
     return;
   }
@@ -30,15 +30,15 @@ axios.interceptors.response.use(data => {
     }
   }
   // return Promise.resolve(err);
-})
-let base = '';
+});
+let base = '/api';
 export const postRequest = (url, params) => {
   return axios({
     method: 'post',
     url: `${base}${url}`,
     data: params,
     transformRequest: [function (data) {
-      let ret = ''
+      let ret = '';
       for (let it in data) {
         ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
       }
@@ -48,7 +48,7 @@ export const postRequest = (url, params) => {
       'Content-Type': 'application/x-www-form-urlencoded'
     }
   });
-}
+};
 export const uploadFileRequest = (url, params) => {
   return axios({
     method: 'post',
@@ -58,14 +58,14 @@ export const uploadFileRequest = (url, params) => {
       'Content-Type': 'multipart/form-data'
     }
   });
-}
+};
 export const putRequest = (url, params) => {
   return axios({
     method: 'put',
     url: `${base}${url}`,
     data: params,
     transformRequest: [function (data) {
-      let ret = ''
+      let ret = '';
       for (let it in data) {
         ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
       }
@@ -75,16 +75,16 @@ export const putRequest = (url, params) => {
       'Content-Type': 'application/x-www-form-urlencoded'
     }
   });
-}
+};
 export const deleteRequest = (url) => {
   return axios({
     method: 'delete',
     url: `${base}${url}`
   });
-}
+};
 export const getRequest = (url) => {
   return axios({
     method: 'get',
     url: `${base}${url}`
   });
-}
+};
