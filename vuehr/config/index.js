@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target: 'http://localhost:8083',
+        target: 'http://localhost:8082',
         changeOrigin: true, // 如果接口跨域，需要进行这个参数配置为true
         secure: false,      // 如果是https接口，需要配置这个参数为true
         pathRewrite: {
@@ -20,7 +20,7 @@ module.exports = {
         }
       },
       '/ws/*': {
-        target: 'ws://127.0.0.1:8083',
+        target: 'ws://127.0.0.1:8082',
         ws: true
       }
     },
