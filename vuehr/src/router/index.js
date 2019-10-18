@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Login from '@/components/Login'
 import Home from '@/components/Home'
 import Chat from '@/components/chat/Chat'
+import NotFound from '@/components/404'
 // import EmpAdv from '@/components/emp/EmpAdv'
 // import EmpBasic from '@/components/emp/EmpBasic'
 // import PerEc from '@/components/personnel/PerEc'
@@ -26,38 +27,43 @@ import Chat from '@/components/chat/Chat'
 // import SysInit from '@/components/system/SysInit'
 // import SysLog from '@/components/system/SysLog'
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
-  routes: [
-    {
-      path: '/login',
-      name: 'Login',
-      component: Login,
-      hidden: true
-    },{
-      path: '/',
-      redirect: '/home',
-    }, {
-      path: '/home',
-      name: '主页',
-      component: Home,
-      hidden: true,
-      meta: {
-        requireAuth: true
-      },
-      children: [
+    routes: [
         {
-          path: '/chat',
-          name: '消息',
-          component: Chat,
-          hidden: true,
-          meta: {
-            keepAlive: false,
-            requireAuth: true
-          }
+            path: '/login',
+            name: 'Login',
+            component: Login,
+            hidden: true
+        }, {
+            path: '/',
+            redirect: '/home',
+        }, {
+            path: '/home',
+            name: '主页',
+            component: Home,
+            hidden: true,
+            meta: {
+                requireAuth: true
+            },
+            children: [
+                {
+                    path: '/chat',
+                    name: '消息',
+                    component: Chat,
+                    hidden: true,
+                    meta: {
+                        keepAlive: false,
+                        requireAuth: true
+                    }
+                }
+            ]
+        }, {
+            path: "/404",
+            name: "NotFound",
+            component: NotFound,
+            hidden: true
         }
-      ]
-    }
-  ]
+    ]
 })
