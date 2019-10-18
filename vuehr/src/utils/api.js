@@ -1,5 +1,7 @@
 import axios from 'axios'
 import {Message} from 'element-ui'
+import router from '.././router'
+import store from '.././store'
 
 axios.interceptors.request.use(config => {
     return config;
@@ -17,6 +19,13 @@ axios.interceptors.response.use(data => {
     }
     return data;
 }, err => {
+    if (!err.response) {
+        store.commit('logout');
+        router.replace({
+            path: '/login',
+            query: { redirect: location.hostname }
+        })
+    }
     if (err.response.status == 504 || err.response.status == 404) {
         Message.error({message: '服务器被吃了⊙﹏⊙∥'});
     } else if (err.response.status == 403) {

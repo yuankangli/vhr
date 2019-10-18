@@ -25,32 +25,31 @@ Vue.prototype.putRequest = putRequest;
 Vue.prototype.isNotNullORBlank = isNotNullORBlank;
 
 router.beforeEach((to, from, next) => {
-        // debugger;
+    // debugger;
 
-        var name = store.state.user.name;
-        if (to.path.toLocaleLowerCase() === '/login') {
-            if (name === '未登录') {
-                next();
-            } else {
-                next({path: '/home'});
-            }
-            return;
-        }
+    var name = store.state.user.name;
+    if (to.path.toLocaleLowerCase() === '/login') {
         if (name === '未登录') {
-            debugger;
-            if (to.meta.requireAuth || to.name == null) {
-                next({path: '/login', query: {redirect: to.path}})
-            } else {
-                next();
-            }
+            next();
         } else {
-            initMenu(router, store);
-            if (to.path === '/chat')
-                store.commit("updateMsgList", []);
+            next({path: '/home'});
+        }
+        return;
+    }
+    if (name === '未登录') {
+        debugger;
+        if (to.meta.requireAuth || to.name == null) {
+            next({path: '/login', query: {redirect: to.path}})
+        } else {
             next();
         }
+    } else {
+        initMenu(router, store);
+        if (to.path === '/chat')
+            store.commit("updateMsgList", []);
+        next();
     }
-);
+});
 
 new Vue({
     el: '#app',
